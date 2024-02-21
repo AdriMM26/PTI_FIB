@@ -4,10 +4,13 @@ import java.io.*;
 import java.io.File;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
+import org.json.simple.*;
 
 public class CarRentalNew extends HttpServlet {
 
   int cont = 0;
+  JSONObject mainJsonObject = new JSONObject();
+  JSONArray array = new JSONArray();
 
   public void doGet(HttpServletRequest req, HttpServletResponse res)
                     throws ServletException, IOException {
@@ -28,15 +31,22 @@ public class CarRentalNew extends HttpServlet {
     cont ++;
 
     /* Write form parameters to rentals.json */
-    FileWriter fileWriter = new FileWriter("rentals.json", true);
-    fileWriter.write("{\n");
-    fileWriter.write("  \"Rating\": \"" + co2 + "\",\n");
-    fileWriter.write("  \"Engine\": \"" + carType + "\",\n");
-    fileWriter.write("  \"Number of days\": \"" + days + "\",\n");
-    fileWriter.write("  \"Number of units\": \"" + vehicles + "\",\n");
-    fileWriter.write("  \"Discount\": \"" + discount + "\"\n");
-    fileWriter.write("}\n");
-    fileWriter.close();
+
+    JSONObject jsonObject = new JSONObject();
+    jsonObject.put("Rating", co2);
+    jsonObject.put("Engine", carType);
+    jsonObject.put("Number of days", days);
+    jsonObject.put("Number of units", vehicles);
+    jsonObject.put("Discount", discount);
+    array.add(jsonObject);
+    mainJsonObject.put("rentals", array);
+
+    try (FileWriter fileWriter = new FileWriter("rentals.json")) {
+      fileWriter.write(mainJsonObject.toJSONString());
+      fileWriter.flush();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
     /* Print form parameters */
     out.println("<html>");
@@ -45,13 +55,11 @@ public class CarRentalNew extends HttpServlet {
     out.println("</head>");
     out.println("<body>");
     out.println("<h1>New Rental</h1>");
-    out.println("<div id='response'></div>");
-    out.println("<script>");out.println("document.getElementById('response').innerHTML = 'C02 Rating: " + co2 + "';");
-    out.println("document.getElementById('response').innerHTML += '<br>Engine: " + carType + "';");
-    out.println("document.getElementById('response').innerHTML += '<br>Number of days: " + days + "';");
-    out.println("document.getElementById('response').innerHTML += '<br>Number of units: " + vehicles + "';");
-    out.println("document.getElementById('response').innerHTML += '<br>Discount: " + discount + "';");
-    out.println("</script>");
+    out.println("<br>C02 Rating: " + co2);
+    out.println("<br>Engine: " + carType);
+    out.println("<br>Number of days: " + days);
+    out.println("<br>Number of units: " + vehicles);
+    out.println("<br>Discount: " + discount);
     out.println("</body>");
     out.println("</html>");
   }
