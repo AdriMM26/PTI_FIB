@@ -33,11 +33,11 @@ public class CarRentalNew extends HttpServlet {
     /* Write form parameters to rentals.json */
 
     JSONObject jsonObject = new JSONObject();
-    jsonObject.put("Rating", co2);
-    jsonObject.put("Engine", carType);
-    jsonObject.put("Number of days", days);
-    jsonObject.put("Number of units", vehicles);
-    jsonObject.put("Discount", discount);
+    jsonObject.put("rating", co2);
+    jsonObject.put("engine", carType);
+    jsonObject.put("days", days);
+    jsonObject.put("units", vehicles);
+    jsonObject.put("disc", discount);
     array.add(jsonObject);
     mainJsonObject.put("rentals", array);
 
