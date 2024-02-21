@@ -10,7 +10,6 @@ public class CarRentalNew extends HttpServlet {
 
   int cont = 0;
   JSONObject mainJsonObject = new JSONObject();
-  JSONArray array = new JSONArray();
 
   public void doGet(HttpServletRequest req, HttpServletResponse res)
                     throws ServletException, IOException {
@@ -38,6 +37,10 @@ public class CarRentalNew extends HttpServlet {
     jsonObject.put("days", days);
     jsonObject.put("units", vehicles);
     jsonObject.put("disc", discount);
+
+    JSONArray array = new JSONArray();
+    array = (JSONArray) mainJsonObject.get("rentals");
+
     array.add(jsonObject);
     mainJsonObject.put("rentals", array);
 
