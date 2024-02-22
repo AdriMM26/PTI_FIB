@@ -292,6 +292,21 @@ def consensus():
 
     return jsonify(response), 200
 
+@app.route('/nodes/list', methods=['GET'])
+def nodes_list():
+    response ={}
+    if len(blockchain.nodes) == 0:
+        print("The node list is empty")
+
+    else:
+        response = {
+            'total_nodes': list(blockchain.nodes)
+        }
+    return jsonify(response), 200
+
+
+
+
 
 if __name__ == '__main__':
     from argparse import ArgumentParser
