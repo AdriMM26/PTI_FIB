@@ -304,10 +304,11 @@ def nodes_list():
         }
     return jsonify(response), 200
 
+
 @app.route('/validate', methods=['GET'])
 def validate():
     response = {}
-    if blockchain.valid_chain:
+    if blockchain.valid_chain(blockchain.chain):
         response = {
             "message":"Valid blockchain."
         }
@@ -316,6 +317,19 @@ def validate():
             "message":"Invalid blockchain."
         }
     return jsonify(response), 200
+
+
+@app.route('/nodes/manipulate', methods=['POST'])
+def manipulate():
+    # Modify timestamp of a block should invalidate the blockchain.
+    print(blockchain.chain[1]['proof'])
+    blockchain.chain[1]['proof'] = 100
+    print(blockchain.chain[1]['proof'])
+    response = {
+        "message":"Blockchain manipulated successfully."
+    }
+    return jsonify(response), 200
+
 
 if __name__ == '__main__':
     from argparse import ArgumentParser
