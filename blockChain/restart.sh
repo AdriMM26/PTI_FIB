@@ -1,6 +1,6 @@
 pkill python
 sleep 2
-python blockchain.py -p 5000 &
+python3 blockchain.py -p 5000 &
 sleep 2
-python blockchain.py -p 5001 &
+python3 blockchain.py -p 5001 &
 
