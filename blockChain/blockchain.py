@@ -304,10 +304,6 @@ def nodes_list():
         }
     return jsonify(response), 200
 
-
-
-
-
 @app.route('/validate', methods=['GET'])
 def validate():
     response = {}
