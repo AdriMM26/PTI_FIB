@@ -293,6 +293,19 @@ def consensus():
     return jsonify(response), 200
 
 
+@app.route('/validate', methods=['GET'])
+def validate():
+    response = {}
+    if blockchain.valid_chain:
+        response = {
+            "message":"Valid blockchain."
+        }
+    else:
+        response = {
+            "message":"Invalid blockchain."
+        }
+    return jsonify(response), 200
+
 if __name__ == '__main__':
     from argparse import ArgumentParser
 
