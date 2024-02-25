@@ -321,13 +321,18 @@ def validate():
 
 @app.route('/nodes/manipulate', methods=['POST'])
 def manipulate():
-    # Modify timestamp of a block should invalidate the blockchain.
-    print(blockchain.chain[1]['proof'])
-    blockchain.chain[1]['proof'] = 100
-    print(blockchain.chain[1]['proof'])
-    response = {
-        "message":"Blockchain manipulated successfully."
+    response = {}
+    # Replacing the proof of the second block by a random value, 
+    # should invalidate the blockchain.
+    if len(blockchain.chain) < 2:
+        response = {
+        "message":"Not enough blocks stored in the blockchain."
     }
+    else:
+        blockchain.chain[1]['proof'] = 100
+        response = {
+            "message":"Blockchain manipulated successfully."
+        }
     return jsonify(response), 200
 
 
