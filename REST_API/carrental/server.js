@@ -38,7 +38,10 @@ app.post('/newrental', (req, res, next) => {
   /* Write array into the file */
   fs.writeFileSync("rentals.json", JSON.stringify(rentalsJSON));
 
-  console.log(new_rental)
+  console.log("New rental created: ", new_rental)
+
+  /* Return 201 HTTP status code (created) */
+  res.status(201)
   res.end();
 })
 
