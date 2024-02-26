@@ -45,17 +45,16 @@ app.post('/newrental', (req, res, next) => {
   res.end();
 })
 
-app.get('list', (req, res, next) => {
+app.get('/list', (req, res, next) => {
   /* Check if file exists and create it if not */
   if(!fs.existsSync('rentals.json')){
-    console.log("File not found");
+    res.send("No rentals registered yet")
   }
   else{
     /* Read file */
     rentalsFileRawData = fs.readFileSync('rentals.json');
     rentalsJSON = JSON.parse(rentalsFileRawData);
-    for(var i in rentalsJSON['rentals']){
-      console.log(rentalsJSON['rentals'][i]+'\n');
-    }
+    res.send(rentalsJSON);
   }
+  res.end();
 })
